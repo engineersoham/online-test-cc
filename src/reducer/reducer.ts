@@ -1,101 +1,93 @@
 export interface initialValue {
-    drawer: boolean,
-    ans1: boolean,
-    ans2: boolean,
-    ans3: boolean,
-    ans4: boolean,
-    ans5: boolean,
-    score: number,
-    rightans: string[],
-    wrongans: string[],
-    RightAns:string[]
     
+    score: number,
+    rightans: {}[],
+    wrongans: {}[],
+    ansID:number[]
+    answers:{}[]
 }
 
-interface draweraction {
-    type: 'SET_DRAWER'
-}
+
 interface scoreaction {
-    type: 'SCORE'
-}
-interface ans1 {
-    type: 'ANS1'
-}
-interface ans2 {
-    type: 'ANS2'
-}
-interface ans3 {
-    type: 'ANS3'
-}
-interface ans4 {
-    type: 'ANS4'
-}
-interface ans5 {
-    type: 'ANS5'
+    type: 'SCORE',
+    payload:any
 }
 
-interface rightanswers {
+interface rightanswer {
     type:'ANSWER',
-    payload:string[]
+    payload:any
 }
-type action = draweraction | scoreaction | ans1 | ans2 | ans3 | ans4 | ans5 | rightanswers
+
+interface wronganswer {
+    type:'WRONGANS',
+    payload:any
+}
+
+interface answersID {
+    type:'ID',
+    payload:number
+}
+
+interface ans {
+    type:'ANS',
+    payload:any
+}
+type action =  scoreaction |  rightanswer | wronganswer | answersID |ans
 
 const InitialValue = {
-    drawer: false,
-    ans1: false,
-    ans2: false,
-    ans3: false,
-    ans4: false,
-    ans5: false,
     score: 0,
     rightans:[],
     wrongans:[],
-    RightAns:['is an open-source JavaScript library that is used for building user interfaces specifically for single-page applications.',
-                'facebook','(1)-(b),(2)-(d),(3)-(a),(4)-(c)','False', 'It allows us to write HTML inside JavaScript' , 'JSX stands for JavaScript XML'
-]
+    ansID:[],
+    answers:[]
 }
 
 const reducer = (state: initialValue = InitialValue, action: action) => {
     const newState = {...state};
 
     switch (action.type) {
-        case 'SET_DRAWER':
-            newState.drawer = !newState.drawer;
-            break;
-        case 'SCORE':
-            newState.score = newState.rightans.length
-            break;
-        case 'ANS1':
-            newState.ans1 = true
-            break;
-        case 'ANS2':
-            newState.ans2 = true
-            break;
-        case 'ANS3':
-            newState.ans3 = true
-            break;
-        case 'ANS4':
-            newState.ans4 = true
-            break;
-        case 'ANS5':
-            newState.ans5 =true
-            break;
-        case 'ANSWER':
-            action.payload.forEach(item => {
-                if(newState.RightAns.includes(item)){
-                    if(!newState.rightans.includes(item)){
-                        newState.rightans = [...newState.rightans, item]
-                    }
-                }else 
-                    if(!newState.wrongans.includes(item)){
-                        newState.wrongans = [...newState.wrongans, item]
-                    }
-                    
-            })
-           
-            
-             break;
         
+        case 'SCORE':
+            console.log(action.payload)
+           if(newState.score < 6){
+            newState.score = newState.score+1
+           }
+            break;
+        
+        case 'ANSWER':
+            newState.rightans = [...newState.rightans, action.payload]
+             break;
+             
+        case 'WRONGANS':
+            console.log('wrong call')
+            console.log(action.payload)
+            newState.wrongans = [...newState.wrongans, action.payload]
+            break;
+
+        case 'ID':
+            if(!newState.ansID.includes(action.payload)){
+                newState.ansID = [...newState.ansID, action.payload]
+            }
+            break;
+
+        case 'ANS':
+            if(newState.answers.length < 1){
+                newState.answers = [...newState.answers, action.payload]
+            }else {
+                let flag = true
+                newState.answers.forEach((item:any)=>{
+                    if(item.queId === action.payload.queId){
+                        flag = false
+                        item.ans = action.payload.ans
+                    }
+                })
+                if(flag){
+                    newState.answers = [...newState.answers, action.payload]
+                }
+            }
+
+            break;
+
         default:
             break;
     }

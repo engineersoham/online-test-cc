@@ -38,7 +38,7 @@ const SignUp = () => {
         }
 
         if (input.email && input.password) {
-            navigate('/login')
+            navigate('/enterpage')
         }
 
     };
