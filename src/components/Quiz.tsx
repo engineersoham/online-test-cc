@@ -223,10 +223,10 @@ const option = ()=>{
     <div>
        {data?
        <>
-        <Grid sx={{textAlign:'center',mb:3}}>
+        <Typography sx={{textAlign:'center',mb:3}}>
             {data?.map((item:any,idx:any)=>{
                 return(
-                    <>
+                    
                     <Button 
                     data-testid={`btn-${idx}`} 
                     key={idx} 
@@ -236,10 +236,10 @@ const option = ()=>{
                     >
                         {item.id}
                     </Button>
-                    </>
+                   
                 )
             })}
-        </Grid>
+        </Typography>
         <Grid sx={{m:2,ml:10}}>
             <Typography variant='h6'>
               Q{data[curPage]?.id}  {data[curPage]?.que}

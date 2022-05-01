@@ -22,20 +22,20 @@ describe('test for result componet',()=>{
         screen.debug()
     })
 
-    test('test for result componet',()=>{
-        const mock = jest.fn();
-        render(
-            <Result/>
-        );
-        expect(mock).toBeDefined();
+    // test('test for result componet',()=>{
+    //     const mock = jest.fn();
+    //     render(
+    //         <Result/>
+    //     );
+    //     expect(mock).toBeDefined();
 ;
-        const score = screen.getByText('Your Score is');
-        expect(score).toBeInTheDocument();
+        // const score = screen.getByText('Your Score is');
+        // expect(score).toBeInTheDocument();
         
         // const data = screen.getByTestId('data')
         // const data1 = screen.getByTestId('data1');
         // expect(data1).toBeInTheDocument()
 
-    }
-    )
+    // }
+    // )
 })

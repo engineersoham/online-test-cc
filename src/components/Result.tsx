@@ -5,24 +5,21 @@ import { queEng, queHindi } from "../question";
 
 const Result = () => {
   const data: any = useLocation().state;
-  let flag = true;
-  let score = 0;
-
-  const myStyle = {
-    width: "20rem",
-    height: "20rem",
-    borderRadius: "50%",
-    backgroundImage: `conic-gradient(green 0deg, green ${score * 60}deg, red ${
-      score * 60
-    }deg, red 360deg )`,
-  };
-
+ 
   const rightList = Array.from(data).filter((q: any) => {
     return JSON.stringify(q.ans) === JSON.stringify(q.userAns);
   });
 
-  score = rightList?.length;
+  const score = rightList?.length;
+  
+  const myStyle = {
+    width: "20rem",
+    height: "20rem",
+    borderRadius: "50%",
+    backgroundImage: `conic-gradient(green 0deg, green ${score * 75}deg, red ${score * 75}deg, red 360deg )`,
+  };
 
+  
   useEffect(() => {
     console.log(score);
   }, [score]);
